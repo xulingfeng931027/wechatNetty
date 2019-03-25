@@ -4,12 +4,13 @@ package wechat.handler.old;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import wechat.domain.Session;
 import wechat.domain.packet.LoginRequestPacket;
 import wechat.domain.packet.LoginResponsePacket;
 import wechat.domain.packet.MessageResponsePacket;
 import wechat.domain.packet.Packet;
-import wechat.util.LoginUtil;
 import wechat.util.PacketCodec;
+import wechat.util.SessionUtil;
 
 import java.util.Date;
 import java.util.UUID;
@@ -46,7 +47,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             LoginResponsePacket responsePacket = (LoginResponsePacket) packet;
             if (responsePacket.getCode() == 0) {
                 //登录成功
-                LoginUtil.markAsLogin(ctx.channel());
+                SessionUtil.bindSession(new Session(responsePacket.getUserId(), responsePacket.getUserName()), ctx.channel());
                 System.out.println(new Date() + "客户端登陆成功");
             } else {
                 System.out.println(new Date() + "客户端登陆失败,原因:" + responsePacket.getMessage());

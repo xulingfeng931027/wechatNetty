@@ -5,7 +5,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import wechat.domain.Session;
 import wechat.domain.packet.LoginRequestPacket;
 import wechat.domain.packet.LoginResponsePacket;
-import wechat.util.LoginUtil;
 import wechat.util.SessionUtil;
 
 import java.util.UUID;
@@ -26,13 +25,13 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         //登录校验
         if (valid(msg)) {
             //校验成功
-            System.out.println("校验成功");
+            System.out.println("登录成功");
             responsePacket.setCode(0);
             String userId = randomUserId();
             responsePacket.setUserId(userId);
             SessionUtil.bindSession(new Session(userId, msg.getUsername()), ctx.channel());
         } else {
-            System.out.println("校验失败");
+            System.out.println("登录失败");
             responsePacket.setCode(1);
             responsePacket.setMessage("用户名或密码错误");
         }

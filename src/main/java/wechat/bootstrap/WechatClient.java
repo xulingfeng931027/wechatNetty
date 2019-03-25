@@ -12,13 +12,8 @@ import wechat.handler.LoginResponseHandler;
 import wechat.handler.MessageResponseHandler;
 import wechat.domain.packet.LoginRequestPacket;
 import wechat.domain.packet.MessageRequestPacket;
-import wechat.util.LoginUtil;
-import wechat.util.PacketDecoder;
-import wechat.util.PacketEncoder;
-import wechat.util.Spliter;
+import wechat.util.*;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -75,10 +70,10 @@ public class WechatClient {
             while (!Thread.interrupted()) {
                 Scanner scanner = new Scanner(System.in); LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
                 try {
-                    if (LoginUtil.hasLogin(channel)) {
+                    if (SessionUtil.hasLogin(channel)) {
                         String toUserId = scanner.next();
                         String message = scanner.next();
-
+                         //发送消息
                         channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
                     } else {
                         //如果没登录就要求登录
