@@ -3,7 +3,7 @@ package wechat.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import wechat.protocol.packet.MessageResponsePacket;
+import wechat.domain.packet.MessageResponsePacket;
 
 /**
  * @author paul

@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import wechat.protocol.Constant;
 import wechat.protocol.JsonSerializer;
 import wechat.protocol.Serializer;
-import wechat.protocol.packet.*;
+import wechat.domain.packet.*;
 
 import java.util.HashMap;
 import java.util.Map;

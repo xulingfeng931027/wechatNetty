@@ -1,4 +1,4 @@
-package wechat.protocol.packet;
+package wechat.domain.packet;
 
 
 import wechat.protocol.Command;
@@ -7,6 +7,9 @@ import wechat.protocol.Command;
  * 收发消息的数据包
  */
 public class MessageRequestPacket extends Packet {
+    /**
+     * 消息内容
+     */
     private String message;
     /**
      * 标识消息要发给哪个用户

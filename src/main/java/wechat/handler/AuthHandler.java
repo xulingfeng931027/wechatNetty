@@ -5,7 +5,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import wechat.util.LoginUtil;
 
 /**
- * 登录校验处理器
+ * 登录校验处理器,实现登录校验拦截，检测到未通过就关闭连接
  */
 public class AuthHandler extends ChannelInboundHandlerAdapter {
     @Override
@@ -13,6 +13,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
         if (!LoginUtil.hasLogin(ctx.channel())) {
             ctx.channel().close();
         } else {
+            //当第一次通过后，移除这个handler，没必要重复验证
             ctx.pipeline().remove(this);
             super.channelRead(ctx, msg);
         }

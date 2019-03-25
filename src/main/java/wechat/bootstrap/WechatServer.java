@@ -31,7 +31,7 @@ public class WechatServer {
                     protected void initChannel(NioSocketChannel ch)
                             throws Exception {
 //                        ch.pipeline().addLast(new LifeCycleTestHandler());
-//                        ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
+                        ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginRequestHandler());
                         ch.pipeline().addLast(new AuthHandler());

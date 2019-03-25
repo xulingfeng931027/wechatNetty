@@ -1,4 +1,4 @@
-package wechat.protocol.packet;
+package wechat.domain.packet;
 
 
 import wechat.protocol.Command;
@@ -10,7 +10,16 @@ public class LoginResponsePacket extends Packet {
 
     private Integer code;
     private String message;
-    String userId;
+    private String userId;
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getUserId() {
         return userId;

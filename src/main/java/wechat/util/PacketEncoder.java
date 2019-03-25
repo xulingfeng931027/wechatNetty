@@ -4,7 +4,7 @@ package wechat.util;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import wechat.protocol.packet.Packet;
+import wechat.domain.packet.Packet;
 
 /**
  * 首先，我们需要创建一个 ByteBuf，这里我们调用 Netty 的 ByteBuf 分配器来创建，ioBuffer()方法会返回适配 io 读写相关的内存，

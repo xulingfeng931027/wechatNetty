@@ -5,8 +5,8 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import wechat.domain.Session;
-import wechat.protocol.packet.MessageRequestPacket;
-import wechat.protocol.packet.MessageResponsePacket;
+import wechat.domain.packet.MessageRequestPacket;
+import wechat.domain.packet.MessageResponsePacket;
 import wechat.util.SessionUtil;
 
 /**

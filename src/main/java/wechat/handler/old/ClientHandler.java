@@ -4,10 +4,10 @@ package wechat.handler.old;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import wechat.protocol.packet.LoginRequestPacket;
-import wechat.protocol.packet.LoginResponsePacket;
-import wechat.protocol.packet.MessageResponsePacket;
-import wechat.protocol.packet.Packet;
+import wechat.domain.packet.LoginRequestPacket;
+import wechat.domain.packet.LoginResponsePacket;
+import wechat.domain.packet.MessageResponsePacket;
+import wechat.domain.packet.Packet;
 import wechat.util.LoginUtil;
 import wechat.util.PacketCodec;
 

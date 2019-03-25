@@ -3,7 +3,7 @@ package wechat.handler.old;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import wechat.protocol.packet.*;
+import wechat.domain.packet.*;
 import wechat.util.PacketCodec;
 
 import java.util.Date;

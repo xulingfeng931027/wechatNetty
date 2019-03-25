@@ -10,15 +10,17 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import wechat.handler.LoginResponseHandler;
 import wechat.handler.MessageResponseHandler;
-import wechat.protocol.packet.LoginRequestPacket;
-import wechat.protocol.packet.MessageRequestPacket;
+import wechat.domain.packet.LoginRequestPacket;
+import wechat.domain.packet.MessageRequestPacket;
 import wechat.util.LoginUtil;
 import wechat.util.PacketDecoder;
 import wechat.util.PacketEncoder;
+import wechat.util.Spliter;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class WechatClient {
@@ -37,7 +39,7 @@ public class WechatClient {
                     protected void initChannel(SocketChannel ch)
                             throws Exception {
 //                        ch.pipeline().addLast(new LifeCycleTestHandler());
-//                        ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
+                        ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
@@ -71,17 +73,17 @@ public class WechatClient {
     private static void startConsoleThread(Channel channel) {
         new Thread(() -> {
             while (!Thread.interrupted()) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+                Scanner scanner = new Scanner(System.in); LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
                 try {
                     if (LoginUtil.hasLogin(channel)) {
-                        String toUserId = br.readLine();
-                        String message = br.readLine();
+                        String toUserId = scanner.next();
+                        String message = scanner.next();
+
                         channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
                     } else {
                         //如果没登录就要求登录
-                        System.out.println("输入用户名登录");
-                        String username = br.readLine();
+                        System.out.println  ("输入用户名登录");
+                        String username = scanner.nextLine();
                         //默认密码
                         loginRequestPacket.setUsername(username);
                         loginRequestPacket.setPassword("pwd");

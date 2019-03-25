@@ -1,4 +1,4 @@
-package wechat.protocol.packet;
+package wechat.domain.packet;
 
 public abstract class Packet {
 
