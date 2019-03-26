@@ -1,10 +1,10 @@
 package wechat.util;
 
 import io.netty.buffer.ByteBuf;
+import wechat.domain.packet.*;
 import wechat.protocol.Constant;
 import wechat.protocol.JsonSerializer;
 import wechat.protocol.Serializer;
-import wechat.domain.packet.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +28,8 @@ public class PacketCodec {
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
         packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
         packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
+        packetTypeMap.put(GROUP_REQUEST, CreateGroupRequestPacket.class);
+
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JsonSerializer();
@@ -35,7 +37,6 @@ public class PacketCodec {
     }
 
     public static final PacketCodec INSTANCE = new PacketCodec();
-
 
 
     public void encode(ByteBuf byteBuf, Packet msg)

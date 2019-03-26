@@ -4,6 +4,7 @@ import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 
+@Deprecated
 public class LoginUtil {
     private static final AttributeKey<Boolean> LOGIN = AttributeKey.valueOf("login");
 

@@ -8,4 +8,5 @@ public interface Command {
     Byte LOGIN_RESPONSE = 2;
     Byte MESSAGE_REQUEST = 3;
     Byte MESSAGE_RESPONSE = 4;
+    Byte GROUP_REQUEST=5;
 }
