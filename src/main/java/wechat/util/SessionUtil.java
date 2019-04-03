@@ -1,6 +1,7 @@
 package wechat.util;
 
 import io.netty.channel.Channel;
+import io.netty.channel.group.ChannelGroup;
 import io.netty.util.AttributeKey;
 import wechat.domain.Session;
 
@@ -13,6 +14,7 @@ public class SessionUtil {
      */
     private static Map<String, Channel> idChannelMap = new ConcurrentHashMap<>();
     private static final AttributeKey<Session> SESSION = AttributeKey.valueOf("session");
+    private static final Map<String, ChannelGroup> GROUP_ID_CHANNEL_GROUP_MAP = new ConcurrentHashMap<>();
 
 
     public static void bindSession(Session session, Channel channel) {
@@ -37,5 +39,14 @@ public class SessionUtil {
 
     public static Channel getChannel(String userId) {
         return idChannelMap.get(userId);
+    }
+
+
+    public static void bindChannelGroup(String groupId, ChannelGroup channelGroup) {
+        GROUP_ID_CHANNEL_GROUP_MAP.put(groupId, channelGroup);
+    }
+
+    public static ChannelGroup getChannelGroup(String groupId) {
+        return GROUP_ID_CHANNEL_GROUP_MAP.get(groupId);
     }
 }

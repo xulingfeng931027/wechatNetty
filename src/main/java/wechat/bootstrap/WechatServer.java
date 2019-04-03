@@ -7,10 +7,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import wechat.handler.AuthHandler;
+import wechat.handler.*;
 import wechat.handler.demo.LifeCycleTestHandler;
-import wechat.handler.LoginRequestHandler;
-import wechat.handler.MessageRequestHandler;
 import wechat.util.PacketDecoder;
 import wechat.util.PacketEncoder;
 import wechat.util.Spliter;
@@ -30,12 +28,13 @@ public class WechatServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch)
                             throws Exception {
-//                        ch.pipeline().addLast(new LifeCycleTestHandler());
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginRequestHandler());
                         ch.pipeline().addLast(new AuthHandler());
                         ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new CreateGroupRequestHandler());
+                        ch.pipeline().addLast(new JoinGroupRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 }).bind(8088);

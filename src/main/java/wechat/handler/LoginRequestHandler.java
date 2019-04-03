@@ -5,6 +5,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import wechat.domain.Session;
 import wechat.domain.packet.LoginRequestPacket;
 import wechat.domain.packet.LoginResponsePacket;
+import wechat.util.IDUtil;
 import wechat.util.SessionUtil;
 
 import java.util.UUID;
@@ -27,7 +28,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
             //校验成功
             System.out.println("登录成功");
             responsePacket.setCode(0);
-            String userId = randomUserId();
+            String userId = IDUtil.randomUserId();
             responsePacket.setUserId(userId);
             SessionUtil.bindSession(new Session(userId, msg.getUsername()), ctx.channel());
         } else {
@@ -40,9 +41,6 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
 
     private boolean valid(LoginRequestPacket loginRequestPacket) {
         return true;
-    }
-    private String randomUserId() {
-        return UUID.randomUUID().toString().split("-")[0];
     }
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {

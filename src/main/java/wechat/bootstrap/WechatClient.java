@@ -8,11 +8,16 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import wechat.consolecommand.ConsoleCommandManager;
+import wechat.consolecommand.LoginConsoleCommand;
+import wechat.handler.CreateGroupResponseHandler;
+import wechat.handler.JoinGroupResponseHandler;
 import wechat.handler.LoginResponseHandler;
 import wechat.handler.MessageResponseHandler;
-import wechat.domain.packet.LoginRequestPacket;
-import wechat.domain.packet.MessageRequestPacket;
-import wechat.util.*;
+import wechat.util.PacketDecoder;
+import wechat.util.PacketEncoder;
+import wechat.util.SessionUtil;
+import wechat.util.Spliter;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -33,11 +38,12 @@ public class WechatClient {
                     @Override
                     protected void initChannel(SocketChannel ch)
                             throws Exception {
-//                        ch.pipeline().addLast(new LifeCycleTestHandler());
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new CreateGroupResponseHandler());
+                        ch.pipeline().addLast(new JoinGroupResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
@@ -68,23 +74,15 @@ public class WechatClient {
     private static void startConsoleThread(Channel channel) {
         new Thread(() -> {
             while (!Thread.interrupted()) {
-                Scanner scanner = new Scanner(System.in); LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+                Scanner scanner = new Scanner(System.in);
                 try {
                     if (SessionUtil.hasLogin(channel)) {
-                        String toUserId = scanner.next();
-                        String message = scanner.next();
-                         //发送消息
-                        channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
+                        //此处由用户输入要调用什么命令,便于扩展
+                        ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
+                        consoleCommandManager.exec(scanner, channel);
                     } else {
-                        //如果没登录就要求登录
-                        System.out.println  ("输入用户名登录");
-                        String username = scanner.nextLine();
-                        //默认密码
-                        loginRequestPacket.setUsername(username);
-                        loginRequestPacket.setPassword("pwd");
-                        //发送登录数据包
-                        channel.writeAndFlush(loginRequestPacket);
-                        waitForLoginResponse();
+                        LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
+                        loginConsoleCommand.exec(scanner, channel);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -94,12 +92,5 @@ public class WechatClient {
         }).start();
     }
 
-    private static void waitForLoginResponse() {
-        try {
-            TimeUnit.MILLISECONDS.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-    }
 }
