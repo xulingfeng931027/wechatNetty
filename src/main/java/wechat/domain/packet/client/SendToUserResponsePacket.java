@@ -1,12 +1,13 @@
-package wechat.domain.packet;
+package wechat.domain.packet.client;
 
 
+import wechat.domain.packet.Packet;
 import wechat.protocol.Command;
 
 /**
  * 收发消息的数据包
  */
-public class MessageResponsePacket extends Packet {
+public class SendToUserResponsePacket extends Packet {
     private String message;
     private String fromUserId;
     private String fromUsername;
@@ -29,7 +30,7 @@ public class MessageResponsePacket extends Packet {
 
     @Override
     public Byte getCommand() {
-        return Command.MESSAGE_RESPONSE;
+        return Command.SEND_TO_USER_RESPONSE;
     }
 
     public String getMessage() {

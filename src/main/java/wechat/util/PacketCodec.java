@@ -1,7 +1,9 @@
 package wechat.util;
 
 import io.netty.buffer.ByteBuf;
-import wechat.domain.packet.*;
+import wechat.domain.packet.Packet;
+import wechat.domain.packet.client.*;
+import wechat.domain.packet.server.*;
 import wechat.protocol.Constant;
 import wechat.protocol.JsonSerializer;
 import wechat.protocol.Serializer;
@@ -12,6 +14,8 @@ import java.util.Map;
 import static wechat.protocol.Command.*;
 
 /**
+ * @author 徐凌峰
+ * 这是一个编解码具体逻辑类
  * 首先，我们需要创建一个 ByteBuf，这里我们调用 Netty 的 ByteBuf 分配器来创建，ioBuffer()方法会返回适配 io 读写相关的内存，
  * 它会尽可能创建一个直接内存，直接内存可以理解为不受 jvm 堆管理的内存空间，写到 IO 缓冲区的效果更高。
  * 接下来，我们将 Java 对象序列化成二进制数据包。
@@ -26,12 +30,15 @@ public class PacketCodec {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(LOGIN_REQUEST, LoginRequestPacket.class);
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
-        packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
-        packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
+        packetTypeMap.put(SEND_TO_USER_REQUEST, SendToUserRequestPacket.class);
+        packetTypeMap.put(SEND_TO_USER_RESPONSE, SendToUserResponsePacket.class);
         packetTypeMap.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
         packetTypeMap.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
         packetTypeMap.put(JOIN_GROUP_REQUEST, JoinGroupRequestPacket.class);
         packetTypeMap.put(JOIN_GROUP_RESPONSE, JoinGroupResponsePacket.class);
+        packetTypeMap.put(GROUP_MESSAGE_REQUEST, GroupMessageRequestPacket.class);
+        packetTypeMap.put(GROUP_MESSAGE_RESPONSE, GroupMessageResponsePacket.class);
+
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JsonSerializer();

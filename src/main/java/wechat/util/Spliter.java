@@ -7,7 +7,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 public class Spliter extends LengthFieldBasedFrameDecoder {
     private static final int LENGTH_FIELD_OFFSET=7;
     private static final int LENGTH_FIELD_SIZE = 4;
-    public Spliter(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) {
+    public Spliter(int maxFrameLength) {
         super(maxFrameLength, LENGTH_FIELD_OFFSET, LENGTH_FIELD_SIZE);
     }
 

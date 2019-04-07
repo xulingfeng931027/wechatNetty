@@ -1,16 +1,26 @@
-package wechat.handler;
+package wechat.handler.server;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import wechat.domain.Session;
-import wechat.domain.packet.LoginRequestPacket;
-import wechat.domain.packet.LoginResponsePacket;
+import wechat.domain.packet.client.LoginResponsePacket;
+import wechat.domain.packet.server.LoginRequestPacket;
 import wechat.util.IDUtil;
 import wechat.util.SessionUtil;
 
-import java.util.UUID;
-
+@ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
+    private LoginRequestHandler() {
+
+    }
+
+    private static final LoginRequestHandler HANDLER = new LoginRequestHandler();
+
+    public static LoginRequestHandler getInstance() {
+        return HANDLER;
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket msg)
             throws Exception {

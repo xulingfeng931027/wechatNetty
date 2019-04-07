@@ -1,7 +1,7 @@
 package wechat.consolecommand;
 
 import io.netty.channel.Channel;
-import wechat.domain.packet.CreateGroupRequestPacket;
+import wechat.domain.packet.server.CreateGroupRequestPacket;
 
 import java.util.Arrays;
 import java.util.Scanner;

@@ -1,10 +1,10 @@
-package wechat.handler;
+package wechat.handler.client;
 
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import wechat.domain.Session;
-import wechat.domain.packet.LoginResponsePacket;
+import wechat.domain.packet.client.LoginResponsePacket;
 import wechat.util.SessionUtil;
 
 import java.util.Date;

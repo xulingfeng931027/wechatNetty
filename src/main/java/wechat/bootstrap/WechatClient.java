@@ -10,12 +10,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import wechat.consolecommand.ConsoleCommandManager;
 import wechat.consolecommand.LoginConsoleCommand;
-import wechat.handler.CreateGroupResponseHandler;
-import wechat.handler.JoinGroupResponseHandler;
-import wechat.handler.LoginResponseHandler;
-import wechat.handler.MessageResponseHandler;
-import wechat.util.PacketDecoder;
-import wechat.util.PacketEncoder;
+import wechat.handler.PacketCodecHandler;
+import wechat.handler.client.*;
 import wechat.util.SessionUtil;
 import wechat.util.Spliter;
 
@@ -38,13 +34,13 @@ public class WechatClient {
                     @Override
                     protected void initChannel(SocketChannel ch)
                             throws Exception {
-                        ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE, 7, 4));
-                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE));
+                        ch.pipeline().addLast(PacketCodecHandler.getInstance());
                         ch.pipeline().addLast(new LoginResponseHandler());
-                        ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new SendToUserResponseHandler());
                         ch.pipeline().addLast(new CreateGroupResponseHandler());
                         ch.pipeline().addLast(new JoinGroupResponseHandler());
-                        ch.pipeline().addLast(new PacketEncoder());
+                        ch.pipeline().addLast(new GroupMessageResponseHandler());
                     }
                 });
         connect(bootstrap, "localhost", 8088, MAX_RETRY);

@@ -3,7 +3,11 @@ package wechat.handler.old;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import wechat.domain.packet.*;
+import wechat.domain.packet.Packet;
+import wechat.domain.packet.client.LoginResponsePacket;
+import wechat.domain.packet.client.SendToUserResponsePacket;
+import wechat.domain.packet.server.LoginRequestPacket;
+import wechat.domain.packet.server.SendToUserRequestPacket;
 import wechat.util.PacketCodec;
 
 import java.util.Date;
@@ -39,12 +43,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             }
 //            ByteBuf responseBytebuf = PacketCodec.INSTANCE.encode(ctx.alloc(), responsePacket);
 //            ctx.writeAndFlush(responseBytebuf);
-        } else if (packet instanceof MessageRequestPacket) {
-            MessageRequestPacket messageRequestPacket = (MessageRequestPacket) packet;
-            System.out.println(new Date() + "收到客户端消息:" + messageRequestPacket.getMessage());
-            MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
-            messageResponsePacket.setMessage("服务端回复:【" + "response:" + messageRequestPacket.getMessage() + "】");
-//            ByteBuf responseByteBuf = PacketCodec.INSTANCE.encode(ctx.alloc(), messageResponsePacket);
+        } else if (packet instanceof SendToUserRequestPacket) {
+            SendToUserRequestPacket sendToUserRequestPacket = (SendToUserRequestPacket) packet;
+            System.out.println(new Date() + "收到客户端消息:" + sendToUserRequestPacket.getMessage());
+            SendToUserResponsePacket sendToUserResponsePacket = new SendToUserResponsePacket();
+            sendToUserResponsePacket.setMessage("服务端回复:【" + "response:" + sendToUserRequestPacket.getMessage() + "】");
+//            ByteBuf responseByteBuf = PacketCodec.INSTANCE.encode(ctx.alloc(), sendToUserResponsePacket);
 //            ctx.channel().writeAndFlush(responseByteBuf);
 
         }

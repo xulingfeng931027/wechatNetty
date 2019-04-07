@@ -5,10 +5,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import wechat.domain.Session;
-import wechat.domain.packet.LoginRequestPacket;
-import wechat.domain.packet.LoginResponsePacket;
-import wechat.domain.packet.MessageResponsePacket;
 import wechat.domain.packet.Packet;
+import wechat.domain.packet.client.LoginResponsePacket;
+import wechat.domain.packet.client.SendToUserResponsePacket;
+import wechat.domain.packet.server.LoginRequestPacket;
 import wechat.util.PacketCodec;
 import wechat.util.SessionUtil;
 
@@ -52,10 +52,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             } else {
                 System.out.println(new Date() + "客户端登陆失败,原因:" + responsePacket.getMessage());
             }
-        } else if (packet instanceof MessageResponsePacket) {
+        } else if (packet instanceof SendToUserResponsePacket) {
             //处理服务端返回的消息
-            MessageResponsePacket messageResponsePacket = (MessageResponsePacket) packet;
-            System.out.println(new Date() + ": 收到服务端的消息: " + messageResponsePacket.getMessage());
+            SendToUserResponsePacket sendToUserResponsePacket = (SendToUserResponsePacket) packet;
+            System.out.println(new Date() + ": 收到服务端的消息: " + sendToUserResponsePacket.getMessage());
         }
         super.channelRead(ctx, msg);
     }

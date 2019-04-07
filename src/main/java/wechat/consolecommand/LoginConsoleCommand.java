@@ -1,7 +1,7 @@
 package wechat.consolecommand;
 
 import io.netty.channel.Channel;
-import wechat.domain.packet.LoginRequestPacket;
+import wechat.domain.packet.server.LoginRequestPacket;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;

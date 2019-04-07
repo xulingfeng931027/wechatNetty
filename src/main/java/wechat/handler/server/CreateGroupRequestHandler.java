@@ -1,12 +1,12 @@
-package wechat.handler;
+package wechat.handler.server;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
-import wechat.domain.packet.CreateGroupRequestPacket;
-import wechat.domain.packet.CreateGroupResponsePacket;
+import wechat.domain.packet.client.CreateGroupResponsePacket;
+import wechat.domain.packet.server.CreateGroupRequestPacket;
 import wechat.util.IDUtil;
 import wechat.util.SessionUtil;
 
@@ -25,6 +25,7 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
             Channel channel = SessionUtil.getChannel(userId);
             if (channel != null) {
                 channels.add(channel);
+                channels.add(ctx.channel());
                 usernameList.add(SessionUtil.getSession(channel).getUserName());
                 //再把自己也放进去
                 usernameList.add(SessionUtil.getSession(ctx.channel()).getUserName());
@@ -35,11 +36,12 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
         responsePacket.setGroupId(IDUtil.randomUserId());
         responsePacket.setUsernameList(usernameList);
         SessionUtil.bindChannelGroup(responsePacket.getGroupId(), channels);
+        System.out.print("群创建成功，id 为[" + responsePacket.getGroupId() + "], ");
+        System.out.println("群里面有：" + responsePacket.getUsernameList());
         //给每个客户端发送通知
         ctx.channel().writeAndFlush(responsePacket);
         channels.writeAndFlush(responsePacket);
 
-        System.out.print("群创建成功，id 为[" + responsePacket.getGroupId() + "], ");
-        System.out.println("群里面有：" + responsePacket.getUsernameList());
+
     }
 }

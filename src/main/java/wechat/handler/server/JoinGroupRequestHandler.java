@@ -1,11 +1,10 @@
-package wechat.handler;
+package wechat.handler.server;
 
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
-import wechat.domain.packet.JoinGroupRequestPacket;
-import wechat.domain.packet.JoinGroupResponsePacket;
+import wechat.domain.packet.client.JoinGroupResponsePacket;
+import wechat.domain.packet.server.JoinGroupRequestPacket;
 import wechat.util.SessionUtil;
 
 public class JoinGroupRequestHandler extends SimpleChannelInboundHandler<JoinGroupRequestPacket> {

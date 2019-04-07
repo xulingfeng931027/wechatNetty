@@ -1,7 +1,7 @@
 package wechat.consolecommand;
 
 import io.netty.channel.Channel;
-import wechat.domain.packet.JoinGroupRequestPacket;
+import wechat.domain.packet.server.JoinGroupRequestPacket;
 
 import java.util.Scanner;
 public class JoinGroupConsoleCommand implements ConsoleCommand {

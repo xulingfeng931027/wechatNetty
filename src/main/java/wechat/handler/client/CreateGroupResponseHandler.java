@@ -1,8 +1,8 @@
-package wechat.handler;
+package wechat.handler.client;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import wechat.domain.packet.CreateGroupResponsePacket;
+import wechat.domain.packet.client.CreateGroupResponsePacket;
 
 public class CreateGroupResponseHandler extends SimpleChannelInboundHandler<CreateGroupResponsePacket> {
     @Override

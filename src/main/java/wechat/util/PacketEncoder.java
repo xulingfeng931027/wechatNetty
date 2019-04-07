@@ -11,7 +11,9 @@ import wechat.domain.packet.Packet;
  * 它会尽可能创建一个直接内存，直接内存可以理解为不受 jvm 堆管理的内存空间，写到 IO 缓冲区的效果更高。
  * 接下来，我们将 Java 对象序列化成二进制数据包。
  * 最后，我们对照本小节开头协议的设计以及上一小节 ByteBuf 的 API，逐个往 ByteBuf 写入字段，即实现了编码过程，到此，编码过程结束。
+ * @see wechat.handler.PacketCodecHandler 代替
  */
+@Deprecated
 public class PacketEncoder extends MessageToByteEncoder<Packet> {
 
     @Override

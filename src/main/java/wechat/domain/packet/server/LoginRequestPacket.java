@@ -1,6 +1,7 @@
-package wechat.domain.packet;
+package wechat.domain.packet.server;
 
 
+import wechat.domain.packet.Packet;
 import wechat.protocol.Command;
 
 /**

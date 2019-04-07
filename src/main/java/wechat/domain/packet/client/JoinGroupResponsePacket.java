@@ -1,5 +1,6 @@
-package wechat.domain.packet;
+package wechat.domain.packet.client;
 
+import wechat.domain.packet.Packet;
 import wechat.protocol.Command;
 
 public class JoinGroupResponsePacket extends Packet {

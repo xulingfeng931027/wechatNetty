@@ -1,8 +1,8 @@
-package wechat.handler;
+package wechat.handler.client;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import wechat.domain.packet.JoinGroupResponsePacket;
+import wechat.domain.packet.client.JoinGroupResponsePacket;
 import wechat.util.SessionUtil;
 
 /**
