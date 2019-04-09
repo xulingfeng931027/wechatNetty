@@ -10,6 +10,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import wechat.handler.AuthHandler;
 import wechat.handler.PacketCodecHandler;
 import wechat.handler.server.IMHandler;
+import wechat.handler.server.IMIdleHandler;
 import wechat.handler.server.LoginRequestHandler;
 import wechat.util.Spliter;
 
@@ -37,6 +38,7 @@ public class WechatServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch)
                             throws Exception {
+                        ch.pipeline().addLast(new IMIdleHandler());
                         ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE));
                         ch.pipeline().addLast(PacketCodecHandler.getInstance());
                         ch.pipeline().addLast(LoginRequestHandler.getInstance());
