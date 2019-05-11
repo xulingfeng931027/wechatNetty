@@ -1,18 +1,10 @@
 package wechat.bootstrap;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import wechat.handler.AuthHandler;
-import wechat.handler.PacketCodecHandler;
-import wechat.handler.server.IMHandler;
-import wechat.handler.server.IMIdleHandler;
-import wechat.handler.server.LoginRequestHandler;
-import wechat.util.Spliter;
 
 /**
  * 所有指令都实现完之后，我们发现我们的 handler 已经非常臃肿庞大了，
@@ -38,12 +30,8 @@ public class WechatServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch)
                             throws Exception {
-                        ch.pipeline().addLast(new IMIdleHandler());
-                        ch.pipeline().addLast(new Spliter(Integer.MAX_VALUE));
-                        ch.pipeline().addLast(PacketCodecHandler.getInstance());
-                        ch.pipeline().addLast(LoginRequestHandler.getInstance());
-                        ch.pipeline().addLast(new AuthHandler());
-                        ch.pipeline().addLast(IMHandler.getInstance());
+                        ch.pipeline().addLast(new ChannelInboundHandlerAdapter());
+                        ch.pipeline().addLast(new ChannelOutboundHandlerAdapter());
                     }
                 }).bind(8088);
 
