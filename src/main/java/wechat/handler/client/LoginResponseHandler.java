@@ -1,6 +1,7 @@
 package wechat.handler.client;
 
 
+import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import wechat.domain.Session;
@@ -21,6 +22,10 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
         } else {
             System.out.println(new Date() + "客户端登陆失败,userid= " + responsePacket.getUserId() + "原因:" + responsePacket.getMessage());
         }
+        //使用与分配给已被接受的子Channel相同的EventLoop
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.group(ctx.channel().eventLoop());
+        bootstrap.connect();
     }
 
     @Override
